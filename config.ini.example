@@ -1,0 +1,9 @@
+[db]
+user=
+password=
+host=
+database=
+port=
+
+[tg_key]
+token=
