@@ -9,6 +9,7 @@ class Database:
     host: str
     database: str
     port: str
+    database_url: str
 
 
 @dataclass

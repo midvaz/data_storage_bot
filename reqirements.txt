@@ -1,2 +1,4 @@
 asyncpg
 aiogram
+psycopg2-binary
+sqlalchemy
