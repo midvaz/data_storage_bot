@@ -9,18 +9,19 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import Command
 
-
 from pkg.config import config
 # from pkg.database import connection
 from pkg.database import sqlalchemy as alch
+from pkg.middlewares.auth import AuthMiddleware
 
 from internal.handler.user import register
 
 
+CONFIG_FILE = "./config.ini"
+
+
 async def main():
     logger = logging.getLogger(__name__)
-
-    CONFIG_FILE = "./config.ini"
 
     logging.basicConfig(
         level=logging.INFO,
@@ -37,6 +38,8 @@ async def main():
     # session = connection.get_connection(cnf)
     session = await alch.get_async_session(cnf.db.database_url).asend(None)
  
+    dp.middleware.setup(AuthMiddleware(session))
+
 
     user_reg = register.UserRegister(session)
     user_reg.regisetr_hendlers(dp)

@@ -19,16 +19,23 @@ class UserRegister(Handler):
         self.session = session
         
     async def register_user(self, m: types.Message) -> None:
-        await UserRepo(self.session).creat_user(
+
+        ur = UserRepo(self.session)
+        
+        if await ur.read_user_by_tg_id(telegram_id = m.from_user.id):
+            await m.reply(f"Вы уже зарегестрированны",  reply=False)
+            return
+        
+        await ur.creat_user(
             User(
-                telegram_id= 0,
+                telegram_id= m.from_user.id,
                 is_admin = False,
                 date_created = datetime.datetime.now(),
                 date_updated = datetime.datetime.now(),
                 data_deleted = None
             )
         )
-        await m.reply(f"Регистарация прошла успешно {m.from_user.id}",  reply=False)
+        await m.reply(f"Регистарация прошла успешно",  reply=False)
 
 
     def regisetr_hendlers(self, dp: Dispatcher) -> None:

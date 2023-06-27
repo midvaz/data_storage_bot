@@ -33,3 +33,8 @@ class UserRepo(Repo):
             select(User).where(User.telegram_id == telegram_id)
         )
         return user
+    
+
+    # async def user_exist(self, telegram_id):
+    #     exist = await self.session.scalar(
+    
