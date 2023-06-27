@@ -18,13 +18,11 @@ class UserRepo(Repo):
 
     async def creat_user(self, user:User) -> None:
         try:
-            # await self.session.add(user)
             self.session.add(user)
             await self.session.commit()
 
         except Exception as e:
             print(f"-----------------{e}")
-            
             self.session.rollback()
 
 
@@ -35,6 +33,3 @@ class UserRepo(Repo):
         return user
     
 
-    # async def user_exist(self, telegram_id):
-    #     exist = await self.session.scalar(
-    

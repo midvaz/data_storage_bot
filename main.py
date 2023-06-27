@@ -15,9 +15,27 @@ from pkg.database import sqlalchemy as alch
 from pkg.middlewares.auth import AuthMiddleware
 
 from internal.handler.user import register
+from internal.handler import base_command
 
 
 CONFIG_FILE = "./config.ini"
+
+
+
+async def reg_middleware(dp, session ):
+    dp.middleware.setup(AuthMiddleware(session))
+
+
+
+
+async def reg_handlers(dp, session):
+    com_start = base_command.BaseComRegister()
+    com_start.regisetr_hendlers(dp)
+
+    user_reg = register.UserRegister(session)
+    user_reg.regisetr_hendlers(dp)
+
+
 
 
 async def main():
@@ -37,12 +55,9 @@ async def main():
 
     # session = connection.get_connection(cnf)
     session = await alch.get_async_session(cnf.db.database_url).asend(None)
- 
-    dp.middleware.setup(AuthMiddleware(session))
 
-
-    user_reg = register.UserRegister(session)
-    user_reg.regisetr_hendlers(dp)
+    await reg_middleware(dp, session)
+    await reg_handlers(dp, session)
 
     try:
         await dp.start_polling()
