@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5555,
+            "driver": "PostgreSQL",
+            "name": "data_storage",
+            "group": "data_storage",
+            "database": "data_storage",
+            "username": "root",
+            "password": "12345"
+        }
+    ]
+}

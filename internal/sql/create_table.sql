@@ -19,12 +19,14 @@ CREATE TABLE IF NOT EXISTS tags (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE IF NOT EXISTS data (
+CREATE TABLE IF NOT EXISTS message_hub (
     id SERIAL PRIMARY KEY,
     user_id INT,
     tag_id INT,
-    descrition TEXT NOT NULL,
-    body_data TEXT NOT NULL,
+    descrition TEXT,
+    mes_tg_id TEXT,
+    mes_name TEXT,
+    mes_type TEXT,
     date_created TIMESTAMP WITH TIME ZONE,
     date_updated TIMESTAMP WITH TIME ZONE DEFAULT NULl,
     data_deleted TIMESTAMP WITH TIME ZONE DEFAULT NULl,

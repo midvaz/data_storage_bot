@@ -9,7 +9,7 @@ import datetime
 import logging
 
 from internal.handler.handler import Handler
-from internal.model.user import User
+from internal.models.user import User
 from internal.service.psql.user import UserRepo
 
 

@@ -8,27 +8,25 @@ from venv import logger
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import Command
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
 from pkg.config import config
-# from pkg.database import connection
 from pkg.database import sqlalchemy as alch
 from pkg.middlewares.auth import AuthMiddleware
-
 from internal.handler.user import register
+from internal.handler.data import new_data
 from internal.handler import base_command
 
 
 CONFIG_FILE = "./config.ini"
 
 
-
-async def reg_middleware(dp, session ):
+async def reg_middleware(dp, session) -> None:
+    dp.middleware.setup(LoggingMiddleware())
     dp.middleware.setup(AuthMiddleware(session))
 
 
-
-
-async def reg_handlers(dp, session):
+async def reg_handlers(dp, session) -> None:
     com_start = base_command.BaseComRegister()
     com_start.regisetr_hendlers(dp)
 
@@ -36,9 +34,14 @@ async def reg_handlers(dp, session):
     user_reg.regisetr_hendlers(dp)
 
 
+    # last handler
+    data = new_data.Add_new_data(session)
+    data.regisetr_hendlers(dp)
 
 
-async def main():
+
+
+async def main() -> None:
     logger = logging.getLogger(__name__)
 
     logging.basicConfig(

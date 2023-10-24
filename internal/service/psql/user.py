@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 import logging
 
-from internal.model.user import User
+from internal.models.user import User
 from internal.service.psql.repo import Repo
 
 

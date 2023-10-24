@@ -10,14 +10,14 @@ from sqlalchemy import (
     ForeignKey
 )
 
-from internal.model.base import Base
+from internal.models.base import Base
 
 
-class User(Base):
-    __tablename__ = "users"
-
-    telegram_id = mapped_column(Integer, unique=True, nullable=False)
-    is_admin = mapped_column(Boolean, default=False, server_default="false", nullable=False)
+class Tag(Base):
+    __tablename__ = "tags"
+    id = mapped_column(Integer, primary_key=True)
+    user_id = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    name = mapped_column(String, unique=True, nullable=False)
     
     date_created = mapped_column(DateTime, nullable=False)
     date_updated = mapped_column(DateTime, nullable=False)

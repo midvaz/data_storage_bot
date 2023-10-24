@@ -2,12 +2,15 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 import aiogram.utils.markdown as fmt
 
 ABOUT = "🗃 О сервисе"
+ADD_RECORD = "⬆️ Добавить запись"
+GET_RECORD = " ⬇️ Получить запись"
 CANCEL_BUTTON = "◀️ отмена"
 PROFILE = "📰 Профиль"
 
-PRIVATE_INTERNAL_COMMANDS = [
+PRIVATE_BASE_COMMANDS = [
     ABOUT,
-    PROFILE,
+    ADD_RECORD
+    # PROFILE,
 ]
 
 PRIVATE_COMMANDS = [
@@ -26,7 +29,7 @@ help_message = f'''
 🗳 Доступные комманды
 ├ /help - инструкция
 ├ /menu - вызвать основное меню приложения
-└ /reqister - регистрация
+└ /register - регистрация
 '''
 
 
@@ -52,7 +55,7 @@ about_service = fmt.text(
 
 def default_menu():
     base_markup = ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-    base_markup.add(*get_buttons_from_text_list(PRIVATE_INTERNAL_COMMANDS))
+    base_markup.add(*get_buttons_from_text_list(PRIVATE_BASE_COMMANDS))
     return base_markup
 
 
