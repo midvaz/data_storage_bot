@@ -1,5 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 import aiogram.utils.markdown as fmt
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
+
 
 ABOUT = "🗃 О сервисе"
 ADD_RECORD = "⬆️ Добавить запись"
@@ -54,14 +56,19 @@ about_service = fmt.text(
 
 
 def default_menu():
-    base_markup = ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-    base_markup.add(*get_buttons_from_text_list(PRIVATE_BASE_COMMANDS))
-    return base_markup
+    # base_markup = ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
+    
+    a = get_buttons_from_text_list(PRIVATE_BASE_COMMANDS)
+    print(f"++++++++++++++++++++++++++{a=}")
+    # base_markup.add(a)
+    return a
 
 
 def get_buttons_from_text_list(commands: list):
-    ret = list()
+    ret = []
+    base_markup = ReplyKeyboardBuilder()
     for item in commands:
-        ret.append(KeyboardButton(item))
+        # print(f"-------------------------{item}")
+        base_markup.add(KeyboardButton(text=str(item)))
 
-    return ret
+    return base_markup

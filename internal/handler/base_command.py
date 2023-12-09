@@ -1,12 +1,9 @@
 import logging
 import types
 
-from aiogram import Dispatcher
-from aiogram.types import Message
-from aiogram.types.inline_keyboard import InlineKeyboardButton, InlineKeyboardMarkup
-from aiogram.utils.callback_data import CallbackData
-from aiogram.dispatcher.filters import Text
-
+from aiogram import Dispatcher, F
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, ReplyKeyboardRemove
+from aiogram.filters.command import Command
 
 from internal.handler.handler import Handler
 from internal.app.base import default_menu, help_message, about_service, ABOUT, PROFILE
@@ -14,7 +11,7 @@ from internal.app.base import default_menu, help_message, about_service, ABOUT, 
 
 logger = logging.getLogger(__name__)
 # TODO: ПОЧИНИТЬ КОЛБЕК 
-reg_c_data = CallbackData("register")
+
 
 
 class BaseComRegister(Handler):
@@ -32,12 +29,7 @@ class BaseComRegister(Handler):
 
     @staticmethod
     def __start_registration_keyboard() -> None:
-        return InlineKeyboardMarkup(row_width=1).add(
-            InlineKeyboardButton(
-                text="Начать регистрацию",
-                callback_data=reg_c_data.new(),
-            )
-        )
+        pass
     
     @staticmethod
     async def __cmd_menu(m: Message):
@@ -45,7 +37,7 @@ class BaseComRegister(Handler):
 
     @staticmethod
     async def __cmd_help(m: Message):
-        await m.reply(help_message, reply_markup=default_menu(), reply=False)
+        await m.reply(help_message, reply_markup=default_menu().as_markup(resize_keyboard=True), reply=False)
 
     @staticmethod
     async def __cmd_about(m: Message):
@@ -53,10 +45,10 @@ class BaseComRegister(Handler):
 
 
     def regisetr_hendlers(self, dp: Dispatcher) -> None:
-        dp.register_message_handler(self.__start, commands=["start"])
-        dp.register_message_handler(self.__cmd_menu, commands=['menu'])
-        dp.register_message_handler(self.__cmd_help, commands=['help'])
+        dp.message.register(self.__start, Command("start"))
+        dp.message.register(self.__cmd_menu, Command("start"))
+        dp.message.register(self.__cmd_help, Command("help"))
 
-        dp.register_message_handler(self.__cmd_about, commands=['about'])
-        dp.register_message_handler(self.__cmd_about, Text(equals=ABOUT))
+        dp.message.register(self.__cmd_about, Command("about"))
+        dp.message.register(self.__cmd_about, F.text ==ABOUT)
 

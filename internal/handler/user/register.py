@@ -1,12 +1,11 @@
 
 
 from aiogram import Dispatcher
-from aiogram import types
-import aiogram.utils.markdown as fmt
-from aiogram.dispatcher.filters import Text
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, ReplyKeyboardRemove
+
+from aiogram.filters.command import Command
 
 import datetime
-import logging
 
 from internal.handler.handler import Handler
 from internal.models.user import User
@@ -18,7 +17,7 @@ class UserRegister(Handler):
         super().__init__()
         self.session = session
         
-    async def register_user(self, m: types.Message) -> None:
+    async def register_user(self, m: Message) -> None:
 
         ur = UserRepo(self.session)
         
@@ -39,4 +38,4 @@ class UserRegister(Handler):
 
 
     def regisetr_hendlers(self, dp: Dispatcher) -> None:
-        dp.register_message_handler(self.register_user, commands=['register'])
+        dp.message.register(self.register_user, Command("register"))

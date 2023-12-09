@@ -1,8 +1,8 @@
 from aiogram import Dispatcher
 from aiogram import types
 from aiogram.types import Message
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
 
 import datetime
 
@@ -73,11 +73,11 @@ class Add_new_data(Handler):
          
 
     def regisetr_hendlers(self, dp: Dispatcher) -> None:
-        dp.register_message_handler(self.__work_with_tags, state=Data_states.choice_tags)
-        dp.register_callback_query_handler(self.__start_new_tag, lambda callback: callback.data =='create_new_tag', state="*")
-        dp.register_message_handler(self.__create_new_tag, state=Data_states.start_create_tag)
+        dp.message.register(self.__work_with_tags, Data_states.choice_tags)
+        # dp.register_callback_query_handler(self.__start_new_tag, lambda callback: callback.data =='create_new_tag', state="*")
+        dp.message.register(self.__create_new_tag, Data_states.start_create_tag)
         #TODO: добавить хендлер с выбором
         
 
-        dp.register_message_handler(self.__add_record, content_types=types.ContentTypes.ANY, state="*")
+        # dp.message.register(self.__add_record, content_types=types.ContentType.ANY, state="*")
         
