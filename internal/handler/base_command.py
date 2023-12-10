@@ -41,7 +41,7 @@ class BaseComRegister(Handler):
 
     @staticmethod
     async def __cmd_about(m: Message):
-        await m.reply(about_service, reply_markup=default_menu(), reply=False)
+        await m.reply(about_service, reply_markup=default_menu().as_markup(resize_keyboard=True), reply=False)
 
 
     def regisetr_hendlers(self, dp: Dispatcher) -> None:

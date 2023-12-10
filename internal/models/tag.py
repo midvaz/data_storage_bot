@@ -16,7 +16,7 @@ from internal.models.base import Base
 class Tag(Base):
     __tablename__ = "tags"
     id = mapped_column(Integer, primary_key=True)
-    user_id = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    user_tg_id = mapped_column(ForeignKey("users.telegram_id", ondelete="CASCADE"))
     name = mapped_column(String, unique=True, nullable=False)
     
     date_created = mapped_column(DateTime, nullable=False)

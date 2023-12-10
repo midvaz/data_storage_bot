@@ -10,12 +10,12 @@ import logging
 
 from internal.models.tag import Tag
 from internal.models.user import User
-from internal.service.psql.repo import Repo
 
 
-class TagRepo(Repo):
+
+class TagRepo:
     def __init__(self, session):
-        Repo.__init__(self, session)
+        self.session = session
 
     # TODO: ДОБАВИТЬ ПРОВЕРКУ НА ТАКОЕ СУЩЕСТВОВАНИЕ
     async def creat_tag(self, tag:Tag) -> Tag:
@@ -38,8 +38,8 @@ class TagRepo(Repo):
         return returing_data
 
 
-    # async def read_user_by_tg_id(self, telegram_id: int) -> Tag:
-    #     user = await self.session.scalar(
-    #         select(Tag).where(Tag.telegram_id == telegram_id)
-    #     )
-    #     return user
+    async def read_by_tg_id(self, telegram_id: int) -> Tag:
+        user = await self.session.scalar(
+            select(Tag).where(Tag.user_tg_id == telegram_id)
+        )
+        return user

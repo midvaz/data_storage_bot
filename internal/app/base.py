@@ -68,7 +68,7 @@ def get_buttons_from_text_list(commands: list):
     ret = []
     base_markup = ReplyKeyboardBuilder()
     for item in commands:
-        # print(f"-------------------------{item}")
+        print(f"-------------------------{item}")
         base_markup.add(KeyboardButton(text=str(item)))
 
     return base_markup

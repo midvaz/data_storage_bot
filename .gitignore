@@ -2,3 +2,4 @@ venv/
 config.ini
 docker-compose.yaml
 test.py
+db
